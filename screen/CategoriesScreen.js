@@ -5,19 +5,29 @@ import CategoryGridTile from '../components/CategoryGridTile';
 
 import { CATEGORIES } from '../data/dummyData';
 
-function renderCategoryItem(itemData) {
-	return (
-		<CategoryGridTile title={itemData.item.title} color={itemData.item.color} />
-	);
-}
+const CategoriesScreen = ({ navigation }) => {
+	function renderCategoryItem(itemData) {
+		function gridPressHandler() {
+			navigation.navigate('MealsOverview', {
+				categoryID: itemData.item.id,
+			});
+		}
 
-const CategoriesScreen = () => {
+		return (
+			<CategoryGridTile
+				title={itemData.item.title}
+				color={itemData.item.color}
+				onPress={gridPressHandler}
+			/>
+		);
+	}
+
 	return (
 		<View>
 			<FlatList
 				data={CATEGORIES}
 				keyExtractor={(item) => item.id}
-				renderItem={renderCategoryItem}
+				renderItem={renderCategoryItem.bind()}
 				numColumns={2}
 			/>
 		</View>
